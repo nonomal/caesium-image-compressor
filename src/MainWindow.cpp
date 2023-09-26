@@ -79,15 +79,9 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->imageList_TreeView->selectionModel(), &QItemSelectionModel::selectionChanged, this, &MainWindow::imageList_selectionChanged);
     connect(ui->imageList_TreeView, &QDropTreeView::dropFinished, this, &MainWindow::dropFinished);
     connect(this->cImageModel, &CImageTreeModel::itemsChanged, this, &MainWindow::cModelItemsChanged);
-    connect(ui->preview_GraphicsView, &QZoomGraphicsView::scaleFactorChanged, ui->previewCompressed_GraphicsView, &QZoomGraphicsView::setScaleFactor);
-    connect(ui->previewCompressed_GraphicsView, &QZoomGraphicsView::scaleFactorChanged, ui->preview_GraphicsView, &QZoomGraphicsView::setScaleFactor);
     connect(ui->imageList_TreeView, &QWidget::customContextMenuRequested, this, &MainWindow::showListContextMenu);
     connect(ui->imageList_TreeView->header(), &QHeaderView::sortIndicatorChanged, this, &MainWindow::listSortChanged);
 
-    connect(ui->preview_GraphicsView->horizontalScrollBar(), &QAbstractSlider::valueChanged, ui->previewCompressed_GraphicsView, &QZoomGraphicsView::setHorizontalScrollBarValue);
-    connect(ui->preview_GraphicsView->verticalScrollBar(), &QAbstractSlider::valueChanged, ui->previewCompressed_GraphicsView, &QZoomGraphicsView::setVerticalScrollBarValue);
-    connect(ui->previewCompressed_GraphicsView->horizontalScrollBar(), &QAbstractSlider::valueChanged, ui->preview_GraphicsView, &QZoomGraphicsView::setHorizontalScrollBarValue);
-    connect(ui->previewCompressed_GraphicsView->verticalScrollBar(), &QAbstractSlider::valueChanged, ui->preview_GraphicsView, &QZoomGraphicsView::setVerticalScrollBarValue);
     connect(keepDatesButtonGroup, &QButtonGroup::buttonClicked, this, &MainWindow::keepDatesButtonGroupClicked);
 
     connect(this->previewWatcher, &QFutureWatcher<ImagePreview>::resultReadyAt, this, &MainWindow::showPreview);
@@ -130,6 +124,9 @@ MainWindow::MainWindow(QWidget* parent)
     }
 
     QImageReader::setAllocationLimit(1024);
+
+    //TODO Move
+//    connect(ui->swap_ToolButton, &QToolButton::clicked, ui->unifiedPreview_Widget, &QUnifiedGraphicsView::swap);
 }
 
 MainWindow::~MainWindow()
@@ -393,13 +390,8 @@ void MainWindow::previewImage(const QModelIndex& imageIndex, bool forceRuntimePr
     if (!settings.value("mainwindow/previews_visible", false).toBool()) {
         return;
     }
-    ui->preview_GraphicsView->removePixmap();
-    ui->previewCompressed_GraphicsView->removePixmap();
-
-    ui->preview_GraphicsView->resetScaleFactor();
-    ui->preview_GraphicsView->setLoading(true);
-    ui->originalImageSize_Label->setLoading(true);
-    ui->previewCompressed_GraphicsView->resetScaleFactor();
+    ui->unifiedPreview_Widget->clear();
+    ui->unifiedPreview_Widget->setLoading(true);
 
     ui->actionPreview->setEnabled(false);
 
@@ -409,7 +401,7 @@ void MainWindow::previewImage(const QModelIndex& imageIndex, bool forceRuntimePr
     images.append(std::pair<QString, bool>(cImage->getFullPath(), false));
 
     // TODO Manage failure better
-    std::function<ImagePreview(std::pair<QString, bool>)> loadPixmap = [this, forceRuntimePreview, cImage](std::pair<QString, bool> pair) {
+    std::function<ImagePreview(std::pair<QString, bool>)> loadPixmap = [this, forceRuntimePreview, cImage](const std::pair<QString, bool>& pair) {
         QString previewFullPath = pair.first;
         ImagePreview imagePreview;
         bool isOnFlyPreview = false;
@@ -434,17 +426,11 @@ void MainWindow::previewImage(const QModelIndex& imageIndex, bool forceRuntimePr
 
     if (!cImage->getCompressedFullPath().isEmpty() || forceRuntimePreview) {
         images.append(std::pair<QString, bool>(imageToBePreviewed, true));
-        ui->previewCompressed_GraphicsView->setLoading(true);
-        ui->compressedImageSize_Label->setLoading(true);
+        ui->unifiedPreview_Widget->setLoading(true); //TODO We set it before, is it necessary here?
     } else {
-        ui->previewCompressed_GraphicsView->setLoading(false);
-        ui->compressedImageSize_Label->setLoading(false);
-        ui->previewCompressed_GraphicsView->scene()->setSceneRect(ui->previewCompressed_GraphicsView->scene()->itemsBoundingRect());
-        ui->previewCompressed_GraphicsView->fitInView(ui->previewCompressed_GraphicsView->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
-        ui->previewCompressed_GraphicsView->show();
+        ui->unifiedPreview_Widget->setLoading(false);
     }
-    ui->preview_GraphicsView->setZoomEnabled(false);
-    ui->previewCompressed_GraphicsView->setZoomEnabled(false);
+//    ui->unifiedPreview_Widget->setZoomEnabled(false);
 
     this->previewWatcher->setFuture(QtConcurrent::mapped(images, loadPixmap));
 }
@@ -541,10 +527,7 @@ void MainWindow::removeFiles(bool all)
         this->cImageModel->removeRows(indexRow, 1, indexParent);
     }
     this->previewWatcher->cancel();
-    ui->preview_GraphicsView->removePixmap();
-    ui->previewCompressed_GraphicsView->removePixmap();
-    ui->preview_GraphicsView->scene()->setSceneRect(ui->preview_GraphicsView->scene()->itemsBoundingRect());
-    ui->previewCompressed_GraphicsView->scene()->setSceneRect(ui->previewCompressed_GraphicsView->scene()->itemsBoundingRect());
+    ui->unifiedPreview_Widget->clear();
     this->isItemRemovalRunning = false;
 }
 
@@ -730,8 +713,6 @@ void MainWindow::imageList_selectionChanged()
 {
     this->selectedIndexes = ui->imageList_TreeView->selectionModel()->selectedIndexes();
     this->selectedCount = this->selectedIndexes.count() / CIMAGE_COLUMNS_SIZE;
-    ui->originalImageSize_Label->clear();
-    ui->compressedImageSize_Label->clear();
     ui->actionPreview->setEnabled(this->selectedCount == 1 && !this->previewWatcher->isRunning());
     if (this->isItemRemovalRunning) {
         return;
@@ -742,8 +723,7 @@ void MainWindow::imageList_selectionChanged()
     ui->actionShow_compressed_in_file_manager->setEnabled(this->selectedCount == 1);
 
     if (this->selectedCount == 0) {
-        ui->preview_GraphicsView->removePixmap();
-        ui->previewCompressed_GraphicsView->removePixmap();
+        ui->unifiedPreview_Widget->clear();
         return;
     }
 
@@ -1156,15 +1136,12 @@ void MainWindow::showPreview(int index)
 {
     ImagePreview imagePreview = previewWatcher->resultAt(index);
     if (index == 0) {
-        ui->preview_GraphicsView->setLoading(false);
-        ui->originalImageSize_Label->setLoading(false);
-        ui->preview_GraphicsView->showPixmap(imagePreview.image);
-        ui->preview_GraphicsView->fitInView(ui->preview_GraphicsView->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
-        ui->preview_GraphicsView->show();
+        ui->unifiedPreview_Widget->setLoading(false);
+        ui->unifiedPreview_Widget->addOriginalPixmap(imagePreview.image);
         if (imagePreview.fileInfo.exists()) {
-            ui->originalImageSize_Label->setText(QString("%1 %2").arg(toHumanSize((double)imagePreview.fileInfo.size()), imagePreview.format));
+//            ui->originalImageSize_Label->setText(QString("%1 %2").arg(toHumanSize((double)imagePreview.fileInfo.size()), imagePreview.format)); //TODO
         } else {
-            ui->originalImageSize_Label->setText(tr("File not found"));
+//            ui->originalImageSize_Label->setText(tr("File not found")); //TODO
         }
     }
 
@@ -1188,12 +1165,8 @@ void MainWindow::showPreview(int index)
                 labelTextPrefix += " (" + tr("Preview") + ")";
             }
         }
-        ui->previewCompressed_GraphicsView->setLoading(false);
-        ui->compressedImageSize_Label->setLoading(false);
-        ui->previewCompressed_GraphicsView->showPixmap(imagePreview.image);
-        ui->compressedImageSize_Label->setText(labelTextPrefix);
-        ui->previewCompressed_GraphicsView->fitInView(ui->previewCompressed_GraphicsView->scene()->itemsBoundingRect(), Qt::KeepAspectRatio);
-        ui->previewCompressed_GraphicsView->show();
+        ui->unifiedPreview_Widget->setLoading(false);
+        ui->unifiedPreview_Widget->addPreviewPixmap(imagePreview.image);
     }
 }
 void MainWindow::compressionCanceled()
@@ -1277,8 +1250,7 @@ void MainWindow::on_actionAuto_preview_toggled(bool toggled)
 
 void MainWindow::previewFinished()
 {
-    ui->preview_GraphicsView->setZoomEnabled(true);
-    ui->previewCompressed_GraphicsView->setZoomEnabled(true);
+//    ui->unifiedPreview_Widget->setZoomEnabled(true);
     ui->actionPreview->setEnabled(this->selectedCount == 1);
 }
 
@@ -1296,10 +1268,7 @@ void MainWindow::clearCache()
 
 void MainWindow::previewCanceled()
 {
-    ui->preview_GraphicsView->setLoading(false);
-    ui->originalImageSize_Label->setLoading(false);
-    ui->previewCompressed_GraphicsView->setLoading(false);
-    ui->compressedImageSize_Label->setLoading(false);
+    ui->unifiedPreview_Widget->setLoading(false);
 }
 
 void MainWindow::on_actionPreview_triggered()

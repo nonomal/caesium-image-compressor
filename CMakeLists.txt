@@ -101,10 +101,11 @@ set(SOURCES
         src/utils/PostCompressionActions.cpp
         src/dialogs/AboutDialog.cpp
         src/widgets/QDropTreeView.cpp
-        src/widgets/QZoomGraphicsView.cpp
+        src/widgets/QUnifiedGraphicsView.cpp
         src/widgets/QCaesiumMessageBox.cpp
         src/widgets/QMainCheckBox.cpp
         src/widgets/QLoadingLabel.cpp
+        src/widgets/QUnifiedPreview.cpp
         src/delegates/HtmlDelegate.cpp
         src/exceptions/ImageNotSupportedException.cpp
         src/exceptions/ImageTooBigException.cpp
@@ -127,6 +128,7 @@ set(UI
         views/AboutDialog.ui
         views/PreferencesDialog.ui
         views/UsageStatsDialog.ui
+        views/QUnifiedPreview.ui
 )
 
 SET(TS_FILES

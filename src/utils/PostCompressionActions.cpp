@@ -27,7 +27,7 @@ void PostCompressionActions::closeApplication()
 void PostCompressionActions::shutdownMachine()
 {
 #ifdef Q_OS_WIN
-    system("shutdown /s");
+    system("shutdown /s /t 5");
 #endif
 
 #ifdef Q_OS_MAC
