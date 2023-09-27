@@ -124,9 +124,6 @@ MainWindow::MainWindow(QWidget* parent)
     }
 
     QImageReader::setAllocationLimit(1024);
-
-    //TODO Move
-//    connect(ui->swap_ToolButton, &QToolButton::clicked, ui->unifiedPreview_Widget, &QUnifiedGraphicsView::swap);
 }
 
 MainWindow::~MainWindow()
@@ -769,7 +766,7 @@ void MainWindow::compressionFinished()
 
     PostCompressionAction postCompressionAction = static_cast<PostCompressionAction>(settings.value("preferences/general/post_compression_action", 0).toInt());
     if (postCompressionAction != PostCompressionAction::NO_ACTION) {
-        PostCompressionActions::runAction(postCompressionAction);
+        PostCompressionActions::runAction(postCompressionAction, ui->outputFolder_LineEdit->text());
         return;
     }
 

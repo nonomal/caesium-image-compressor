@@ -198,12 +198,12 @@ All rights reserved.</translation>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="875"/>
-        <location filename="../../src/MainWindow.cpp" line="821"/>
-        <location filename="../../src/MainWindow.cpp" line="825"/>
+        <location filename="../../src/MainWindow.cpp" line="818"/>
+        <location filename="../../src/MainWindow.cpp" line="822"/>
+        <location filename="../../src/MainWindow.cpp" line="857"/>
         <location filename="../../src/MainWindow.cpp" line="860"/>
-        <location filename="../../src/MainWindow.cpp" line="863"/>
+        <location filename="../../src/MainWindow.cpp" line="869"/>
         <location filename="../../src/MainWindow.cpp" line="872"/>
-        <location filename="../../src/MainWindow.cpp" line="875"/>
         <source>px</source>
         <translation>px</translation>
     </message>
@@ -301,8 +301,8 @@ All rights reserved.</translation>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="1268"/>
-        <location filename="../../src/MainWindow.cpp" line="464"/>
-        <location filename="../../src/MainWindow.cpp" line="675"/>
+        <location filename="../../src/MainWindow.cpp" line="461"/>
+        <location filename="../../src/MainWindow.cpp" line="672"/>
         <source>Cancel</source>
         <translation>İptal Et</translation>
     </message>
@@ -367,7 +367,7 @@ All rights reserved.</translation>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="1434"/>
-        <location filename="../../src/MainWindow.cpp" line="186"/>
+        <location filename="../../src/MainWindow.cpp" line="183"/>
         <source>Exit</source>
         <translation>Çıkış</translation>
     </message>
@@ -443,7 +443,7 @@ All rights reserved.</translation>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="1581"/>
-        <location filename="../../src/MainWindow.cpp" line="1165"/>
+        <location filename="../../src/MainWindow.cpp" line="1162"/>
         <source>Preview</source>
         <translation>Ön izleme</translation>
     </message>
@@ -453,22 +453,22 @@ All rights reserved.</translation>
         <translation>Ctrl+P</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="246"/>
+        <location filename="../../src/MainWindow.cpp" line="243"/>
         <source>Import files...</source>
         <translation>Dosyaları içe aktar...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="262"/>
+        <location filename="../../src/MainWindow.cpp" line="259"/>
         <source>Import folder...</source>
         <translation>Klasörü içe aktar...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="464"/>
+        <location filename="../../src/MainWindow.cpp" line="461"/>
         <source>Importing files...</source>
         <translation>Dosyalar içe aktarılıyor...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="560"/>
+        <location filename="../../src/MainWindow.cpp" line="557"/>
         <source>You are about to overwrite your original images and this action can&apos;t be undone.
 
 Do you really want to continue?</source>
@@ -477,44 +477,44 @@ Do you really want to continue?</source>
 Gerçekten devam etmek istiyor musun?</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="563"/>
-        <location filename="../../src/MainWindow.cpp" line="674"/>
+        <location filename="../../src/MainWindow.cpp" line="560"/>
+        <location filename="../../src/MainWindow.cpp" line="671"/>
         <source>Yes</source>
         <translation>Evet</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="564"/>
+        <location filename="../../src/MainWindow.cpp" line="561"/>
         <source>No</source>
         <translation>Hayır</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="595"/>
-        <location filename="../../src/MainWindow.cpp" line="1243"/>
+        <location filename="../../src/MainWindow.cpp" line="592"/>
+        <location filename="../../src/MainWindow.cpp" line="1240"/>
         <source>Compressing...</source>
         <translation>Sıkıştırılıyor...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="671"/>
+        <location filename="../../src/MainWindow.cpp" line="668"/>
         <source>Do you really want to quit?</source>
         <translation>Gerçekten çıkmak istiyor musun?</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="696"/>
+        <location filename="../../src/MainWindow.cpp" line="693"/>
         <source>Select output folder...</source>
         <translation>Çıktı klasörünü seç...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="761"/>
+        <location filename="../../src/MainWindow.cpp" line="758"/>
         <source>Compression finished!</source>
         <translation>Sıkıştırma bitti!</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="776"/>
+        <location filename="../../src/MainWindow.cpp" line="773"/>
         <source>You just saved %1!</source>
         <translation>Az önce kaydedilen %1!</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="780"/>
+        <location filename="../../src/MainWindow.cpp" line="777"/>
         <source>Total files: %1
 Original size: %2
 Compressed size: %3
@@ -526,23 +526,23 @@ Kaydedildi: %4 (%5%)</translation>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="623"/>
-        <location filename="../../src/MainWindow.cpp" line="835"/>
-        <location filename="../../src/MainWindow.cpp" line="839"/>
+        <location filename="../../src/MainWindow.cpp" line="832"/>
+        <location filename="../../src/MainWindow.cpp" line="836"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="976"/>
+        <location filename="../../src/MainWindow.cpp" line="973"/>
         <source>images in list</source>
         <translation>listedeki resimler</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1149"/>
+        <location filename="../../src/MainWindow.cpp" line="1146"/>
         <source>File not found</source>
         <translation>Dosya bulunamadı</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1176"/>
+        <location filename="../../src/MainWindow.cpp" line="1173"/>
         <source>Finishing...</source>
         <translation>Bitiriliyor...</translation>
     </message>
@@ -575,12 +575,17 @@ Kaydedildi: %4 (%5%)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../views/PreferencesDialog.ui" line="446"/>
+        <location filename="../../views/PreferencesDialog.ui" line="438"/>
+        <source>Open output folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../views/PreferencesDialog.ui" line="451"/>
         <source>Perform an action after successful compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../views/PreferencesDialog.ui" line="531"/>
+        <location filename="../../views/PreferencesDialog.ui" line="536"/>
         <source>Close</source>
         <translation>Kapat</translation>
     </message>
@@ -624,7 +629,7 @@ Kaydedildi: %4 (%5%)</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../views/PreferencesDialog.ui" line="505"/>
+        <location filename="../../views/PreferencesDialog.ui" line="510"/>
         <source>Changes will apply after restart</source>
         <translation>Değişiklikler yeniden başlatıldıktan sonra uygulanacak</translation>
     </message>
@@ -733,7 +738,7 @@ Kaydedildi: %4 (%5%)</translation>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="248"/>
+        <location filename="../../src/MainWindow.cpp" line="245"/>
         <source>Image Files</source>
         <translation>Resim Dosyaları</translation>
     </message>
@@ -783,22 +788,22 @@ Kaydedildi: %4 (%5%)</translation>
         <translation>Dosya bulunamadı</translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="246"/>
+        <location filename="../../src/utils/Utils.cpp" line="251"/>
         <source>Same as input</source>
         <translation>Giriş ile aynı</translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="247"/>
+        <location filename="../../src/utils/Utils.cpp" line="252"/>
         <source>JPG</source>
         <translation>JPG</translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="248"/>
+        <location filename="../../src/utils/Utils.cpp" line="253"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="249"/>
+        <location filename="../../src/utils/Utils.cpp" line="254"/>
         <source>WebP</source>
         <translation>WebP</translation>
     </message>

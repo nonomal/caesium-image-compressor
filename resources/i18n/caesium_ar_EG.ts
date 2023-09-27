@@ -76,29 +76,29 @@ All rights reserved.</translation>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="246"/>
+        <location filename="../../src/MainWindow.cpp" line="243"/>
         <source>Import files...</source>
         <translation>استيراد ملفات...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="262"/>
+        <location filename="../../src/MainWindow.cpp" line="259"/>
         <source>Import folder...</source>
         <translation>استيراد المجلد...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="464"/>
+        <location filename="../../src/MainWindow.cpp" line="461"/>
         <source>Importing files...</source>
         <translation>جاري استيراد ملفات...</translation>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="1268"/>
-        <location filename="../../src/MainWindow.cpp" line="464"/>
-        <location filename="../../src/MainWindow.cpp" line="675"/>
+        <location filename="../../src/MainWindow.cpp" line="461"/>
+        <location filename="../../src/MainWindow.cpp" line="672"/>
         <source>Cancel</source>
         <translation>إلغاء</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="560"/>
+        <location filename="../../src/MainWindow.cpp" line="557"/>
         <source>You are about to overwrite your original images and this action can&apos;t be undone.
 
 Do you really want to continue?</source>
@@ -107,54 +107,54 @@ Do you really want to continue?</source>
 هل تريد حقًا الاستمرار؟</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="564"/>
+        <location filename="../../src/MainWindow.cpp" line="561"/>
         <source>No</source>
         <translation>لا</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1149"/>
+        <location filename="../../src/MainWindow.cpp" line="1146"/>
         <source>File not found</source>
         <translation type="unfinished">الملف غير موجود</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="1176"/>
+        <location filename="../../src/MainWindow.cpp" line="1173"/>
         <source>Finishing...</source>
         <translation>جاري الإنهاء...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="595"/>
-        <location filename="../../src/MainWindow.cpp" line="1243"/>
+        <location filename="../../src/MainWindow.cpp" line="592"/>
+        <location filename="../../src/MainWindow.cpp" line="1240"/>
         <source>Compressing...</source>
         <translation>جاري الضغط...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="671"/>
+        <location filename="../../src/MainWindow.cpp" line="668"/>
         <source>Do you really want to quit?</source>
         <translation>هل حقا تريد الخروج؟</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="563"/>
-        <location filename="../../src/MainWindow.cpp" line="674"/>
+        <location filename="../../src/MainWindow.cpp" line="560"/>
+        <location filename="../../src/MainWindow.cpp" line="671"/>
         <source>Yes</source>
         <translation>نعم</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="696"/>
+        <location filename="../../src/MainWindow.cpp" line="693"/>
         <source>Select output folder...</source>
         <translation>حدد مجلد المخرجات...</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="761"/>
+        <location filename="../../src/MainWindow.cpp" line="758"/>
         <source>Compression finished!</source>
         <translation>انتهى الضغط!</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="776"/>
+        <location filename="../../src/MainWindow.cpp" line="773"/>
         <source>You just saved %1!</source>
         <translation>لقد وفرت  لتو %1!</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="780"/>
+        <location filename="../../src/MainWindow.cpp" line="777"/>
         <source>Total files: %1
 Original size: %2
 Compressed size: %3
@@ -282,12 +282,12 @@ Saved: %4 (%5%)</source>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="875"/>
-        <location filename="../../src/MainWindow.cpp" line="821"/>
-        <location filename="../../src/MainWindow.cpp" line="825"/>
+        <location filename="../../src/MainWindow.cpp" line="818"/>
+        <location filename="../../src/MainWindow.cpp" line="822"/>
+        <location filename="../../src/MainWindow.cpp" line="857"/>
         <location filename="../../src/MainWindow.cpp" line="860"/>
-        <location filename="../../src/MainWindow.cpp" line="863"/>
+        <location filename="../../src/MainWindow.cpp" line="869"/>
         <location filename="../../src/MainWindow.cpp" line="872"/>
-        <location filename="../../src/MainWindow.cpp" line="875"/>
         <source>px</source>
         <translation>px</translation>
     </message>
@@ -380,7 +380,7 @@ Saved: %4 (%5%)</source>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="1581"/>
-        <location filename="../../src/MainWindow.cpp" line="1165"/>
+        <location filename="../../src/MainWindow.cpp" line="1162"/>
         <source>Preview</source>
         <translation type="unfinished"></translation>
     </message>
@@ -457,7 +457,7 @@ Saved: %4 (%5%)</source>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="1434"/>
-        <location filename="../../src/MainWindow.cpp" line="186"/>
+        <location filename="../../src/MainWindow.cpp" line="183"/>
         <source>Exit</source>
         <translation>خروج</translation>
     </message>
@@ -538,13 +538,13 @@ Saved: %4 (%5%)</source>
     </message>
     <message>
         <location filename="../../views/MainWindow.ui" line="623"/>
-        <location filename="../../src/MainWindow.cpp" line="835"/>
-        <location filename="../../src/MainWindow.cpp" line="839"/>
+        <location filename="../../src/MainWindow.cpp" line="832"/>
+        <location filename="../../src/MainWindow.cpp" line="836"/>
         <source>%</source>
         <translation>%</translation>
     </message>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="976"/>
+        <location filename="../../src/MainWindow.cpp" line="973"/>
         <source>images in list</source>
         <translation>الصور في القائمة</translation>
     </message>
@@ -557,7 +557,7 @@ Saved: %4 (%5%)</source>
         <translation>الإعدادات</translation>
     </message>
     <message>
-        <location filename="../../views/PreferencesDialog.ui" line="531"/>
+        <location filename="../../views/PreferencesDialog.ui" line="536"/>
         <source>Close</source>
         <translation>إغلاق</translation>
     </message>
@@ -622,12 +622,17 @@ Saved: %4 (%5%)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../views/PreferencesDialog.ui" line="446"/>
+        <location filename="../../views/PreferencesDialog.ui" line="438"/>
+        <source>Open output folder</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../views/PreferencesDialog.ui" line="451"/>
         <source>Perform an action after successful compression</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../views/PreferencesDialog.ui" line="505"/>
+        <location filename="../../views/PreferencesDialog.ui" line="510"/>
         <source>Changes will apply after restart</source>
         <translation>سيتم تطبيق التغييرات بعد إعادة التشغيل</translation>
     </message>
@@ -743,7 +748,7 @@ Saved: %4 (%5%)</source>
 <context>
     <name>QIODevice</name>
     <message>
-        <location filename="../../src/MainWindow.cpp" line="248"/>
+        <location filename="../../src/MainWindow.cpp" line="245"/>
         <source>Image Files</source>
         <translation>ملفات الصور</translation>
     </message>
@@ -793,22 +798,22 @@ Saved: %4 (%5%)</source>
         <translation>الملف غير موجود</translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="246"/>
+        <location filename="../../src/utils/Utils.cpp" line="251"/>
         <source>Same as input</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="247"/>
+        <location filename="../../src/utils/Utils.cpp" line="252"/>
         <source>JPG</source>
         <translation>JPG</translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="248"/>
+        <location filename="../../src/utils/Utils.cpp" line="253"/>
         <source>PNG</source>
         <translation>PNG</translation>
     </message>
     <message>
-        <location filename="../../src/utils/Utils.cpp" line="249"/>
+        <location filename="../../src/utils/Utils.cpp" line="254"/>
         <source>WebP</source>
         <translation>WebP</translation>
     </message>
