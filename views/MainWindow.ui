@@ -352,9 +352,6 @@
                          <property name="readOnly">
                           <bool>false</bool>
                          </property>
-                         <property name="buttonSymbols">
-                          <enum>QAbstractSpinBox::NoButtons</enum>
-                         </property>
                          <property name="maximum">
                           <number>100</number>
                          </property>
@@ -414,9 +411,6 @@
                            <width>40</width>
                            <height>0</height>
                           </size>
-                         </property>
-                         <property name="buttonSymbols">
-                          <enum>QAbstractSpinBox::NoButtons</enum>
                          </property>
                          <property name="maximum">
                           <number>100</number>
@@ -516,9 +510,6 @@
                          </property>
                          <property name="readOnly">
                           <bool>false</bool>
-                         </property>
-                         <property name="buttonSymbols">
-                          <enum>QAbstractSpinBox::NoButtons</enum>
                          </property>
                          <property name="maximum">
                           <number>100</number>
@@ -945,9 +936,6 @@
                  <widget class="QCheckBox" name="doNotEnlarge_CheckBox">
                   <property name="text">
                    <string>Do not enlarge</string>
-                  </property>
-                  <property name="checked">
-                   <bool>true</bool>
                   </property>
                  </widget>
                 </item>

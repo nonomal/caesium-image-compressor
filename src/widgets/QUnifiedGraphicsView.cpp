@@ -24,8 +24,6 @@ QUnifiedGraphicsView::QUnifiedGraphicsView(QWidget* parent)
 
     this->originalPixmapItem = new QGraphicsPixmapItem();
     this->previewPixmapItem = new QGraphicsPixmapItem();
-
-    this->currentShownPreviewItem = PreviewImageItem::NONE;
 }
 
 void QUnifiedGraphicsView::wheelEvent(QWheelEvent* event)
@@ -104,18 +102,15 @@ void QUnifiedGraphicsView::addOriginalPixmap(const QPixmap& original)
     this->originalPixmapItem = this->graphicsScene->addPixmap(original);
     this->graphicsScene->setSceneRect(this->graphicsScene->itemsBoundingRect());
     this->centerOn(this->originalPixmapItem);
-
-    this->currentShownPreviewItem = PreviewImageItem::ORIGINAL;
 }
 
 void QUnifiedGraphicsView::addPreviewPixmap(const QPixmap& preview)
 {
-    this->previewPixmapItem = this->graphicsScene->addPixmap(preview);
+    this->previewPixmapItem = this->graphicsScene->addPixmap(preview.scaled(this->originalPixmapItem->pixmap().size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     if (this->originalPixmapItem) {
         this->originalPixmapItem->hide();
     }
     this->centerOn(this->originalPixmapItem);
-    this->currentShownPreviewItem = PreviewImageItem::PREVIEW;
 }
 
 void QUnifiedGraphicsView::removeOriginalPixmap()
@@ -125,9 +120,9 @@ void QUnifiedGraphicsView::removeOriginalPixmap()
 
     if (this->previewPixmapItem && !this->previewPixmapItem->isVisible()) {
         this->previewPixmapItem->show();
-        this->currentShownPreviewItem = PreviewImageItem::PREVIEW;
+        emit currentPreviewImageChanged(PreviewImageItem::PREVIEW);
     } else {
-        this->currentShownPreviewItem = PreviewImageItem::NONE;
+        emit currentPreviewImageChanged(PreviewImageItem::NONE);
     }
 }
 
@@ -138,9 +133,9 @@ void QUnifiedGraphicsView::removePreviewPixmap()
 
     if (this->originalPixmapItem && !this->originalPixmapItem->isVisible()) {
         this->originalPixmapItem->show();
-        this->currentShownPreviewItem = PreviewImageItem::ORIGINAL;
+        emit currentPreviewImageChanged(PreviewImageItem::ORIGINAL);
     } else {
-        this->currentShownPreviewItem = PreviewImageItem::NONE;
+        emit currentPreviewImageChanged(PreviewImageItem::NONE);
     }
 }
 
@@ -149,16 +144,7 @@ void QUnifiedGraphicsView::clearPixmaps()
     this->removeOriginalPixmap();
     this->removePreviewPixmap();
 
-    this->currentShownPreviewItem = PreviewImageItem::NONE;
-}
-
-void QUnifiedGraphicsView::swap()
-{
-    if (this->currentShownPreviewItem == PreviewImageItem::ORIGINAL) {
-        this->showPreview();
-    } else if (this->currentShownPreviewItem == PreviewImageItem::PREVIEW) {
-        this->showOriginal();
-    }
+    emit currentPreviewImageChanged(PreviewImageItem::NONE);
 }
 
 void QUnifiedGraphicsView::zoomToFit()
@@ -178,24 +164,46 @@ void QUnifiedGraphicsView::zoomToFull()
 
 void QUnifiedGraphicsView::showOriginal()
 {
-    if (this->previewPixmapItem && this->previewPixmapItem->isVisible()) {
-        this->previewPixmapItem->hide();
-    }
-
     if (this->originalPixmapItem && !this->originalPixmapItem->isVisible()) {
+        if (this->previewPixmapItem && this->previewPixmapItem->isVisible()) {
+            this->previewPixmapItem->hide();
+        }
         this->originalPixmapItem->show();
-        this->currentShownPreviewItem = PreviewImageItem::ORIGINAL;
+        emit currentPreviewImageChanged(PreviewImageItem::ORIGINAL);
     }
 }
 
 void QUnifiedGraphicsView::showPreview()
 {
-    if (this->originalPixmapItem && this->originalPixmapItem->isVisible()) {
-        this->originalPixmapItem->hide();
-    }
-
     if (this->previewPixmapItem && !this->previewPixmapItem->isVisible()) {
+        if (this->originalPixmapItem && this->originalPixmapItem->isVisible()) {
+            this->originalPixmapItem->hide();
+        }
         this->previewPixmapItem->show();
-        this->currentShownPreviewItem = PreviewImageItem::PREVIEW;
+        emit currentPreviewImageChanged(PreviewImageItem::PREVIEW);
     }
 }
+
+//void QUnifiedGraphicsView::drawForeground(QPainter* painter, const QRectF& rect)
+//{
+//    QGraphicsView::drawForeground(painter, rect);
+//
+//    QString overlayText = "Prova";
+//    // Draw overlay text in the middle of the view
+//    painter->setRenderHint(QPainter::TextAntialiasing);
+//    painter->setPen(Qt::black); // Set text color
+//    QFont font = painter->font();
+//    font.setPointSize(56); // Set font size
+//    painter->setFont(font);
+//
+//    QFontMetrics fm(painter->font());
+//    // Calculate the position to center the text
+//    QPointF center = mapToScene(viewport()->rect().center());
+//    qDebug() << center;
+//    qDebug() << fm.boundingRect(overlayText).width();
+//    qDebug() << fm.boundingRect(overlayText).height();
+//    QPointF textPosition = center - QPointF(fm.boundingRect(overlayText).width() / 2, fm.boundingRect(overlayText).height() / 2);
+//
+//    // Draw the overlay text
+//    painter->drawText(textPosition, overlayText);
+//}

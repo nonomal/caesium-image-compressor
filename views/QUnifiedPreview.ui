@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <layout class="QGridLayout" name="root_GridLayout">
    <property name="leftMargin">
     <number>0</number>
@@ -28,39 +31,65 @@
    </property>
    <item row="0" column="0">
     <layout class="QGridLayout" name="main_GridLayout">
-     <item row="1" column="0" colspan="7">
-      <widget class="QUnifiedGraphicsView" name="unified_GraphicsView">
-       <property name="frameShape">
-        <enum>QFrame::NoFrame</enum>
+     <item row="0" column="5">
+      <widget class="QSpinBox" name="zoomFactor_SpinBox">
+       <property name="frame">
+        <bool>false</bool>
        </property>
-       <property name="frameShadow">
-        <enum>QFrame::Plain</enum>
+       <property name="accelerated">
+        <bool>true</bool>
        </property>
-       <property name="lineWidth">
-        <number>0</number>
+       <property name="showGroupSeparator" stdset="0">
+        <bool>false</bool>
        </property>
-       <property name="verticalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+       <property name="suffix">
+        <string>%</string>
        </property>
-       <property name="horizontalScrollBarPolicy">
-        <enum>Qt::ScrollBarAlwaysOff</enum>
+       <property name="maximum">
+        <number>500</number>
        </property>
-       <property name="renderHints">
-        <set>QPainter::Antialiasing|QPainter::SmoothPixmapTransform|QPainter::TextAntialiasing</set>
-       </property>
-       <property name="dragMode">
-        <enum>QGraphicsView::ScrollHandDrag</enum>
-       </property>
-       <property name="resizeAnchor">
-        <enum>QGraphicsView::AnchorViewCenter</enum>
+       <property name="value">
+        <number>100</number>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
-      <widget class="QToolButton" name="swap_ToolButton"/>
+     <item row="0" column="3">
+      <widget class="QToolButton" name="swap_ToolButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="toolTip">
+        <string>Swap original with preview</string>
+       </property>
+       <property name="shortcut">
+        <string>Ctrl+Space</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
-     <item row="0" column="5">
+     <item row="0" column="2">
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="0" column="4">
       <widget class="QSlider" name="zoomFactor_Slider">
+       <property name="maximumSize">
+        <size>
+         <width>120</width>
+         <height>16777215</height>
+        </size>
+       </property>
        <property name="minimum">
         <number>0</number>
        </property>
@@ -86,44 +115,74 @@
         <bool>false</bool>
        </property>
        <property name="tickPosition">
-        <enum>QSlider::TicksBelow</enum>
+        <enum>QSlider::TicksBothSides</enum>
        </property>
        <property name="tickInterval">
         <number>100</number>
        </property>
       </widget>
      </item>
-     <item row="0" column="3">
-      <widget class="QToolButton" name="zoomFull_ToolButton">
-       <property name="text">
-        <string>1:1</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="title_Label">
-       <property name="text">
-        <string>Preview</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QToolButton" name="zoomFit_ToolButton">
+     <item row="0" column="1">
+      <widget class="QLabel" name="previewInfo_Label">
        <property name="text">
         <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="6">
+      <widget class="QToolButton" name="zoomFit_ToolButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="toolTip">
+        <string>Zoom to fit the view</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0" colspan="8">
+      <widget class="QUnifiedGraphicsView" name="unified_GraphicsView">
+       <property name="frameShape">
+        <enum>QFrame::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Plain</enum>
+       </property>
+       <property name="lineWidth">
+        <number>0</number>
+       </property>
+       <property name="verticalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="horizontalScrollBarPolicy">
+        <enum>Qt::ScrollBarAlwaysOff</enum>
+       </property>
+       <property name="renderHints">
+        <set>QPainter::Antialiasing|QPainter::LosslessImageRendering|QPainter::TextAntialiasing</set>
+       </property>
+       <property name="dragMode">
+        <enum>QGraphicsView::ScrollHandDrag</enum>
+       </property>
+       <property name="resizeAnchor">
+        <enum>QGraphicsView::AnchorViewCenter</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="7">
+      <widget class="QToolButton" name="zoomFull_ToolButton">
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="toolTip">
+        <string>Zoom to image original size</string>
+       </property>
+       <property name="autoRaise">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -139,5 +198,38 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>zoomFactor_Slider</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>zoomFactor_SpinBox</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>584</x>
+     <y>15</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>669</x>
+     <y>21</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>zoomFactor_SpinBox</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>zoomFactor_Slider</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>662</x>
+     <y>4</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>627</x>
+     <y>12</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

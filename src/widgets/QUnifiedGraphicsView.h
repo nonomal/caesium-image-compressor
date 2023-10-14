@@ -2,6 +2,7 @@
 #ifndef CAESIUM_IMAGE_COMPRESSOR_QUNIFIEDGRAPHICSVIEW_H
 #define CAESIUM_IMAGE_COMPRESSOR_QUNIFIEDGRAPHICSVIEW_H
 
+#include "utils/Utils.h"
 #include <QGraphicsProxyWidget>
 #include <QGraphicsView>
 #include <QLabel>
@@ -11,12 +12,6 @@
 
 class QUnifiedGraphicsView : public QGraphicsView {
     Q_OBJECT
-
-    enum class PreviewImageItem {
-        ORIGINAL,
-        PREVIEW,
-        NONE
-    };
 
 public:
     explicit QUnifiedGraphicsView(QWidget* parent = nullptr);
@@ -41,7 +36,7 @@ protected:
     bool zooming = false;
     bool loading = false;
     bool zoomEnabled = true;
-    PreviewImageItem currentShownPreviewItem = PreviewImageItem::NONE;
+
 
     QLabel* loaderLabel;
     QMovie* loaderMovie;
@@ -50,10 +45,11 @@ protected:
     QGraphicsPixmapItem* originalPixmapItem;
     QGraphicsPixmapItem* previewPixmapItem;
 
+//    void drawForeground(QPainter* painter, const QRectF &rect) override;
+
 public slots:
     void setScaleFactor(QWheelEvent* event);
     void setScaleFactor(double factor);
-    void swap();
     void showOriginal();
     void showPreview();
     void zoomToFit();
@@ -61,6 +57,7 @@ public slots:
 
 signals:
     void scaleFactorChanged(double factor);
+    void currentPreviewImageChanged(const PreviewImageItem& item);
 };
 
 #endif // CAESIUM_IMAGE_COMPRESSOR_QUNIFIEDGRAPHICSVIEW_H

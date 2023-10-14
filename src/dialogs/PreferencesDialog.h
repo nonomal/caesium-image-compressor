@@ -32,6 +32,7 @@ private slots:
     static void onSkipCompressionDialogsToggled(bool checked);
     static void onMultithreadingMaxThreadsChanged(int value);
     static void onPostCompressionActionChanged(int value);
+    static void onRestartButtonPressed();
 
 private:
     Ui::PreferencesDialog* ui;

@@ -97,7 +97,9 @@ MainWindow::MainWindow(QWidget* parent)
     connect(ui->format_ComboBox, &QComboBox::currentIndexChanged, this, &MainWindow::outputFormatIndexChanged);
     connect(ui->moveOriginalFileToTrash_CheckBox, &QCheckBox::toggled, this, &MainWindow::moveOriginalFileToTrashToggled);
 
-    this->on_keepAspectRatio_CheckBox_toggled(ui->keepAspectRatio_CheckBox->isChecked());
+    connect(ui->width_SpinBox, &QSpinBox::valueChanged, this, &MainWindow::onWidthSpinBoxValueChanged);
+    connect(ui->height_SpinBox, &QSpinBox::valueChanged, this, &MainWindow::onHeightSpinBoxValueChanged);
+
     this->on_doNotEnlarge_CheckBox_toggled(ui->doNotEnlarge_CheckBox->isChecked());
     this->on_keepAspectRatio_CheckBox_toggled(ui->keepAspectRatio_CheckBox->isChecked());
     this->on_sameOutputFolderAsInput_CheckBox_toggled(ui->sameOutputFolderAsInput_CheckBox->isChecked());
@@ -623,7 +625,7 @@ CompressionOptions MainWindow::getCompressionOptions(QString rootFolder)
 
     CompressionOptions compressionOptions = {
         ui->outputFolder_LineEdit->text(),
-        rootFolder,
+        std::move(rootFolder),
         ui->outputSuffix_LineEdit->text(),
         ui->format_ComboBox->currentIndex(),
         ui->lossless_CheckBox->isChecked(),
@@ -795,7 +797,7 @@ void MainWindow::on_actionClear_triggered()
     this->removeFiles(true);
 }
 
-void MainWindow::dropFinished(QStringList filePaths)
+void MainWindow::dropFinished(const QStringList& filePaths)
 {
     QString baseFolder = getRootFolder(filePaths);
     this->importFiles(filePaths, baseFolder);
@@ -874,19 +876,18 @@ void MainWindow::on_fitTo_ComboBox_currentIndexChanged(int index)
         break;
     }
 
-    qDebug() << ui->width_SpinBox->suffix();
     this->writeSetting("compression_options/resize/fit_to", index);
     this->toggleLosslessWarningVisible();
 }
 
-void MainWindow::on_width_SpinBox_valueChanged(int value)
+void MainWindow::onWidthSpinBoxValueChanged(int value)
 {
     if (ui->fitTo_ComboBox->currentIndex() == ResizeMode::PERCENTAGE && ui->keepAspectRatio_CheckBox->isChecked()) {
         ui->height_SpinBox->setValue(value);
     }
 }
 
-void MainWindow::on_height_SpinBox_valueChanged(int value)
+void MainWindow::onHeightSpinBoxValueChanged(int value)
 {
     if (ui->fitTo_ComboBox->currentIndex() == ResizeMode::PERCENTAGE && ui->keepAspectRatio_CheckBox->isChecked()) {
         ui->width_SpinBox->setValue(value);
@@ -1133,13 +1134,7 @@ void MainWindow::showPreview(int index)
 {
     ImagePreview imagePreview = previewWatcher->resultAt(index);
     if (index == 0) {
-        ui->unifiedPreview_Widget->setLoading(false);
-        ui->unifiedPreview_Widget->addOriginalPixmap(imagePreview.image);
-        if (imagePreview.fileInfo.exists()) {
-//            ui->originalImageSize_Label->setText(QString("%1 %2").arg(toHumanSize((double)imagePreview.fileInfo.size()), imagePreview.format)); //TODO
-        } else {
-//            ui->originalImageSize_Label->setText(tr("File not found")); //TODO
-        }
+        ui->unifiedPreview_Widget->setOriginalPreview(imagePreview);
     }
 
     if (index == 1) {
@@ -1162,8 +1157,11 @@ void MainWindow::showPreview(int index)
                 labelTextPrefix += " (" + tr("Preview") + ")";
             }
         }
+        ui->unifiedPreview_Widget->setCompressedPreview(imagePreview);
+    }
+
+    if (previewWatcher->isFinished()) {
         ui->unifiedPreview_Widget->setLoading(false);
-        ui->unifiedPreview_Widget->addPreviewPixmap(imagePreview.image);
     }
 }
 void MainWindow::compressionCanceled()
@@ -1249,6 +1247,7 @@ void MainWindow::previewFinished()
 {
 //    ui->unifiedPreview_Widget->setZoomEnabled(true);
     ui->actionPreview->setEnabled(this->selectedCount == 1);
+    ui->unifiedPreview_Widget->setLoading(false);
 }
 
 void MainWindow::clearCache()

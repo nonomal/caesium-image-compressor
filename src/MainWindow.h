@@ -51,8 +51,8 @@ private slots:
     void on_outputSuffix_LineEdit_textChanged(const QString& arg1);
     void on_actionRemove_triggered();
     void on_actionClear_triggered();
-    void on_width_SpinBox_valueChanged(int arg1);
-    void on_height_SpinBox_valueChanged(int arg1);
+    void onWidthSpinBoxValueChanged(int arg1);
+    void onHeightSpinBoxValueChanged(int arg1);
     void on_edge_SpinBox_valueChanged(int arg1);
     void on_keepAspectRatio_CheckBox_toggled(bool checked);
     void on_doNotEnlarge_CheckBox_toggled(bool checked);
@@ -61,7 +61,7 @@ private slots:
     void on_keepStructure_CheckBox_toggled(bool checked);
     void imageList_selectionChanged();
     void compressionFinished();
-    void dropFinished(QStringList filePaths);
+    void dropFinished(const QStringList& filePaths);
     void on_fitTo_ComboBox_currentIndexChanged(int index);
     void on_lossless_CheckBox_toggled(bool checked);
     void on_keepMetadata_CheckBox_toggled(bool checked);
@@ -138,7 +138,7 @@ private:
     void triggerImportFiles();
     void triggerImportFolder();
     void writeSettings();
-    void writeSetting(const QString& key, const QVariant& value);
+    static void writeSetting(const QString& key, const QVariant& value);
     void readSettings();
     void previewImage(const QModelIndex& imageIndex, bool forceRuntimePreview = false);
     void updateFolderMap(QString baseFolder, int count);

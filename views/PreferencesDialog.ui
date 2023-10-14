@@ -512,6 +512,19 @@
        <property name="alignment">
         <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
        </property>
+       <property name="openExternalLinks">
+        <bool>false</bool>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="restart_Button">
+       <property name="text">
+        <string>Restart</string>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
       </widget>
      </item>
      <item>
@@ -552,8 +565,8 @@
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>827</x>
-     <y>547</y>
+     <x>526</x>
+     <y>435</y>
     </hint>
     <hint type="destinationlabel">
      <x>608</x>
@@ -568,12 +581,12 @@
    <slot>setEnabled(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>109</x>
-     <y>478</y>
+     <x>128</x>
+     <y>393</y>
     </hint>
     <hint type="destinationlabel">
-     <x>659</x>
-     <y>478</y>
+     <x>517</x>
+     <y>394</y>
     </hint>
    </hints>
   </connection>

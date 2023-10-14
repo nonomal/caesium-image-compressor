@@ -66,6 +66,12 @@ enum class PostCompressionAction {
     OPEN_FOLDER
 };
 
+enum class PreviewImageItem {
+    ORIGINAL,
+    PREVIEW,
+    NONE
+};
+
 typedef struct CsMaxOutputSizeUnit {
     QString label;
     MaxOutputSizeUnit unit;
