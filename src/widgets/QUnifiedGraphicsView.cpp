@@ -2,7 +2,6 @@
 #include "QUnifiedGraphicsView.h"
 #include <QLabel>
 #include <QMovie>
-#include <QPainterPath>
 #include <QScrollBar>
 
 QUnifiedGraphicsView::QUnifiedGraphicsView(QWidget* parent)

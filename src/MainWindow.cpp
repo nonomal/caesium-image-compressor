@@ -8,15 +8,11 @@
 
 #include <QDesktopServices>
 #include <QFileDialog>
-#include <QMessageBox>
 #include <QMovie>
 #include <QProgressBar>
 #include <QProgressDialog>
 #include <QScrollBar>
-#include <QStandardPaths>
-#include <QTime>
 #include <QWheelEvent>
-#include <QWidgetAction>
 #include <QWindow>
 #include <QtConcurrent>
 #include <dialogs/PreferencesDialog.h>
@@ -699,13 +695,13 @@ void MainWindow::on_outputFolderBrowse_Button_clicked()
     if (!directoryPath.isEmpty()) {
         ui->outputFolder_LineEdit->setText(directoryPath);
 
-        this->writeSetting("compression_options/output/output_folder", directoryPath);
+        MainWindow::writeSetting("compression_options/output/output_folder", directoryPath);
     }
 }
 
 void MainWindow::on_outputSuffix_LineEdit_textChanged(const QString& arg1)
 {
-    this->writeSetting("compression_options/output/output_suffix", arg1);
+    MainWindow::writeSetting("compression_options/output/output_suffix", arg1);
 }
 
 void MainWindow::imageList_selectionChanged()
@@ -876,7 +872,7 @@ void MainWindow::on_fitTo_ComboBox_currentIndexChanged(int index)
         break;
     }
 
-    this->writeSetting("compression_options/resize/fit_to", index);
+    MainWindow::writeSetting("compression_options/resize/fit_to", index);
     this->toggleLosslessWarningVisible();
 }
 

@@ -8,7 +8,6 @@
 #include <QJsonDocument>
 #include <QProcess>
 #include <QSettings>
-#include <QStyleFactory>
 
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent)
