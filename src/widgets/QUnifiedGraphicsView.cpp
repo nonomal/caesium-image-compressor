@@ -101,6 +101,7 @@ void QUnifiedGraphicsView::addOriginalPixmap(const QPixmap& original)
     this->originalPixmapItem = this->graphicsScene->addPixmap(original);
     this->graphicsScene->setSceneRect(this->graphicsScene->itemsBoundingRect());
     this->centerOn(this->originalPixmapItem);
+    emit currentPreviewImageChanged(PreviewImageItem::ORIGINAL);
 }
 
 void QUnifiedGraphicsView::addPreviewPixmap(const QPixmap& preview)
@@ -110,32 +111,19 @@ void QUnifiedGraphicsView::addPreviewPixmap(const QPixmap& preview)
         this->originalPixmapItem->hide();
     }
     this->centerOn(this->originalPixmapItem);
+    emit currentPreviewImageChanged(PreviewImageItem::PREVIEW);
 }
 
 void QUnifiedGraphicsView::removeOriginalPixmap()
 {
     delete this->originalPixmapItem;
     this->originalPixmapItem = new QGraphicsPixmapItem();
-
-    if (this->previewPixmapItem && !this->previewPixmapItem->isVisible()) {
-        this->previewPixmapItem->show();
-        emit currentPreviewImageChanged(PreviewImageItem::PREVIEW);
-    } else {
-        emit currentPreviewImageChanged(PreviewImageItem::NONE);
-    }
 }
 
 void QUnifiedGraphicsView::removePreviewPixmap()
 {
     delete this->previewPixmapItem;
     this->previewPixmapItem = new QGraphicsPixmapItem();
-
-    if (this->originalPixmapItem && !this->originalPixmapItem->isVisible()) {
-        this->originalPixmapItem->show();
-        emit currentPreviewImageChanged(PreviewImageItem::ORIGINAL);
-    } else {
-        emit currentPreviewImageChanged(PreviewImageItem::NONE);
-    }
 }
 
 void QUnifiedGraphicsView::clearPixmaps()

@@ -25,15 +25,15 @@ private:
     PreviewImageItem currentShownPreviewItem = PreviewImageItem::NONE;
 
 private slots:
-    void onScaleFactorChanged(double scaleFactor);
-    void onZoomSliderChanged(int value);
+    void onScaleFactorChanged(double scaleFactor) const;
+    void onZoomSliderChanged(int value) const;
     void onCurrentShowPreviewItemChanged(const PreviewImageItem& item);
-    void swap();
+    void swap() const;
 
 public:
     void setOriginalPreview(const ImagePreview& originalPreview);
     void setCompressedPreview(const ImagePreview& compressedPreview);
-    void setLoading(bool loading);
+    void setLoading(bool loading) const;
     void clear();
 };
 

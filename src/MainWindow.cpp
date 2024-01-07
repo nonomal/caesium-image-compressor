@@ -381,8 +381,7 @@ void MainWindow::previewImage(const QModelIndex& imageIndex, bool forceRuntimePr
         this->previewWatcher->cancel();
         this->previewWatcher->waitForFinished();
     }
-    QSettings settings;
-    if (!settings.value("mainwindow/previews_visible", false).toBool()) {
+    if (!QSettings().value("mainwindow/previews_visible", false).toBool()) {
         return;
     }
     ui->unifiedPreview_Widget->clear();
@@ -393,7 +392,7 @@ void MainWindow::previewImage(const QModelIndex& imageIndex, bool forceRuntimePr
     CImage* cImage = this->cImageModel->getRootItem()->children().at(imageIndex.row())->getCImage();
     QString imageToBePreviewed = forceRuntimePreview ? cImage->getTemporaryPreviewFullPath() : cImage->getCompressedFullPath();
     QList<std::pair<QString, bool>> images;
-    images.append(std::pair<QString, bool>(cImage->getFullPath(), false));
+    images.append(std::pair(cImage->getFullPath(), false));
 
     // TODO Manage failure better
     std::function<ImagePreview(std::pair<QString, bool>)> loadPixmap = [this, forceRuntimePreview, cImage](const std::pair<QString, bool>& pair) {
@@ -402,14 +401,14 @@ void MainWindow::previewImage(const QModelIndex& imageIndex, bool forceRuntimePr
         bool isOnFlyPreview = false;
         if (pair.second && forceRuntimePreview && !QFileInfo::exists(previewFullPath)) {
             isOnFlyPreview = true;
-            bool result = cImage->preview(this->getCompressionOptions(this->importedFilesRootFolder));
+            const bool result = cImage->preview(this->getCompressionOptions(this->importedFilesRootFolder));
             if (!result) {
                 previewFullPath = cImage->getCompressedFullPath();
             }
         }
         auto* imageReader = new QImageReader(previewFullPath);
         imageReader->setAutoTransform(true);
-        QPixmap image = QPixmap::fromImageReader(imageReader);
+        const QPixmap image = QPixmap::fromImageReader(imageReader);
         imagePreview.image = image;
         imagePreview.fileInfo = QFileInfo(previewFullPath);
         imagePreview.originalSize = cImage->getOriginalSize();
@@ -420,8 +419,7 @@ void MainWindow::previewImage(const QModelIndex& imageIndex, bool forceRuntimePr
     };
 
     if (!cImage->getCompressedFullPath().isEmpty() || forceRuntimePreview) {
-        images.append(std::pair<QString, bool>(imageToBePreviewed, true));
-        ui->unifiedPreview_Widget->setLoading(true); //TODO We set it before, is it necessary here?
+        images.append(std::pair(imageToBePreviewed, true));
     } else {
         ui->unifiedPreview_Widget->setLoading(false);
     }
@@ -722,13 +720,13 @@ void MainWindow::imageList_selectionChanged()
         return;
     }
 
-    auto currentIndex = this->selectedIndexes.at(0);
+    const auto currentIndex = this->selectedIndexes.at(0);
 
     if (currentIndex.row() == -1) {
         return;
     }
 
-    bool autoPreview = QSettings().value("mainwindow/auto_preview", false).toBool();
+    const bool autoPreview = QSettings().value("mainwindow/auto_preview", false).toBool();
     this->previewImage(this->proxyModel->mapToSource(currentIndex), autoPreview);
 }
 
@@ -1126,8 +1124,12 @@ void MainWindow::listContextMenuAboutToShow()
     ui->actionShow_compressed_in_file_manager->setDisabled(cImage->getCompressedFullPath().isEmpty());
 }
 
-void MainWindow::showPreview(int index)
+void MainWindow::showPreview(const int index)
 {
+    if (previewWatcher->isFinished()) {
+        ui->unifiedPreview_Widget->setLoading(false);
+    }
+
     ImagePreview imagePreview = previewWatcher->resultAt(index);
     if (index == 0) {
         ui->unifiedPreview_Widget->setOriginalPreview(imagePreview);
@@ -1154,10 +1156,6 @@ void MainWindow::showPreview(int index)
             }
         }
         ui->unifiedPreview_Widget->setCompressedPreview(imagePreview);
-    }
-
-    if (previewWatcher->isFinished()) {
-        ui->unifiedPreview_Widget->setLoading(false);
     }
 }
 void MainWindow::compressionCanceled()

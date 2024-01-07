@@ -3,7 +3,7 @@
 
 QUnifiedPreview::QUnifiedPreview(QWidget* parent)
     : QWidget(parent)
-    , ui(new Ui::QUnifiedPreview)
+      , ui(new Ui::QUnifiedPreview)
 {
     ui->setupUi(this);
 
@@ -12,7 +12,6 @@ QUnifiedPreview::QUnifiedPreview(QWidget* parent)
     ui->swap_ToolButton->setIcon(QIcon(":/icons/ui/swap.svg"));
     ui->zoomFit_ToolButton->setIcon(QIcon(":/icons/ui/zoom_fit.svg"));
     ui->zoomFull_ToolButton->setIcon(QIcon(":/icons/ui/expand.svg"));
-
 
     connect(ui->zoomFactor_Slider, &QSlider::valueChanged, this, &QUnifiedPreview::onZoomSliderChanged);
     connect(ui->unified_GraphicsView, &QUnifiedGraphicsView::scaleFactorChanged, this, &QUnifiedPreview::onScaleFactorChanged);
@@ -32,42 +31,42 @@ void QUnifiedPreview::clear()
     ui->unified_GraphicsView->clearPixmaps();
     ui->unified_GraphicsView->resetScaleFactor();
     ui->previewInfo_Label->clear();
+    this->originalPreview = {};
+    this->compressedPreview = {};
 }
 
-void QUnifiedPreview::setLoading(bool loading)
+void QUnifiedPreview::setLoading(const bool loading) const
 {
-    ui->unified_GraphicsView->setLoading(loading);
-    ui->previewInfo_Label->clear();
-    ui->previewInfo_Label->setText(tr("Loading..."));
+    // ui->unified_GraphicsView->setLoading(loading);
+    // ui->previewInfo_Label->clear();
+    // if (loading) {
+    //     ui->previewInfo_Label->setText(tr("Loading..."));
+    // }
 }
 
-void QUnifiedPreview::onZoomSliderChanged(int value) {
-    double factor = std::clamp(value, 1, 500);
-    ui->unified_GraphicsView->setScaleFactor((double)factor);
+void QUnifiedPreview::onZoomSliderChanged(int value) const
+{
+    ui->unified_GraphicsView->setScaleFactor(std::clamp(value, 1, 500));
 }
 
-void QUnifiedPreview::onScaleFactorChanged(double scaleFactor)
+void QUnifiedPreview::onScaleFactorChanged(double scaleFactor) const
 {
     ui->zoomFactor_Slider->setValue(qRound(scaleFactor * 100));
 }
 
 void QUnifiedPreview::setOriginalPreview(const ImagePreview& op)
 {
-    QUnifiedPreview::originalPreview = op;
+    this->originalPreview = op;
     ui->unified_GraphicsView->addOriginalPixmap(op.image);
-    ui->previewInfo_Label->setText(QString("ORIGINAL - %1 %2").arg(toHumanSize((double)op.fileInfo.size()), op.format));
-    this->currentShownPreviewItem = PreviewImageItem::ORIGINAL;
 }
 
 void QUnifiedPreview::setCompressedPreview(const ImagePreview& cp)
 {
-    QUnifiedPreview::compressedPreview = cp;
+    this->compressedPreview = cp;
     ui->unified_GraphicsView->addPreviewPixmap(cp.image);
-    ui->previewInfo_Label->setText(QString("PREVIEW - %1 %2").arg(toHumanSize((double)cp.fileInfo.size()), cp.format));
-    this->currentShownPreviewItem = PreviewImageItem::PREVIEW;
 }
 
-void QUnifiedPreview::swap()
+void QUnifiedPreview::swap() const
 {
     if (this->currentShownPreviewItem == PreviewImageItem::ORIGINAL) {
         ui->unified_GraphicsView->showPreview();
@@ -80,9 +79,9 @@ void QUnifiedPreview::onCurrentShowPreviewItemChanged(const PreviewImageItem& it
 {
     this->currentShownPreviewItem = item;
     if (item == PreviewImageItem::ORIGINAL) {
-        ui->previewInfo_Label->setText(QString("ORIGINAL - %1 %2").arg(toHumanSize((double)this->originalPreview.fileInfo.size()), this->originalPreview.format));
+        ui->previewInfo_Label->setText(QString("ORIGINAL - %1 %2").arg(toHumanSize(static_cast<double>(this->originalPreview.fileInfo.size())), this->originalPreview.format));
     } else if (item == PreviewImageItem::PREVIEW) {
-        ui->previewInfo_Label->setText(QString("PREVIEW - %1 %2").arg(toHumanSize((double)this->compressedPreview.fileInfo.size()), this->compressedPreview.format));
+        ui->previewInfo_Label->setText(QString("PREVIEW - %1 %2").arg(toHumanSize(static_cast<double>(this->compressedPreview.fileInfo.size())), this->compressedPreview.format));
     } else {
         ui->previewInfo_Label->clear();
     }
