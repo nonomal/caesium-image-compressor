@@ -17,6 +17,7 @@ public:
 private slots:
     void onLanguageChanged(int index) const;
     void onThemeChanged(int index) const;
+    void onThemeVariantChanged(int index) const;
     static int getLocaleIndex();
     static void onArgsBehaviourChanged(int index);
     static void onPromptExitToggled(bool checked);
@@ -29,6 +30,7 @@ private slots:
     static void onMultithreadingMaxThreadsChanged(int value);
     static void onPostCompressionActionChanged(int value);
     static void onRestartButtonPressed();
+    static void onThreadsPriorityChanged(int value);
 
 private:
     Ui::PreferencesDialog* ui;

@@ -1,6 +1,5 @@
 #include "LanguageManager.h"
 #include <QApplication>
-#include <QDebug>
 #include <QSettings>
 
 QList<CsLocale> LanguageManager::getTranslations()
@@ -57,15 +56,14 @@ int LanguageManager::findSortedIndex(const QString& languageId)
 
 QString LanguageManager::getLocaleFromPreferences(const QVariant& preference)
 {
-    QString locale = "default";
-    if (preference.type() == QVariant::Int || preference.type() == QVariant::LongLong) {
+    if (preference.typeId() == QVariant::Int || preference.typeId() == QVariant::LongLong) {
         int localeIndex = preference.toInt();
-        locale = LanguageManager::getTranslations().at(localeIndex).locale;
-    } else if (preference.type() == QVariant::String) {
-        locale = preference.toString();
+        return LanguageManager::getTranslations().at(localeIndex).locale;
+    } else if (preference.typeId() == QVariant::String) {
+        return preference.toString();
+    } else {
+        return "default";
     }
-
-    return locale;
 }
 
 void LanguageManager::loadLocale(QTranslator* translator)
