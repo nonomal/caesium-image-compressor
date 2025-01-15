@@ -9,7 +9,6 @@
 #include <QProcess>
 #include <QSettings>
 
-
 PreferencesDialog::PreferencesDialog(QWidget* parent)
     : QDialog(parent)
     , ui(new Ui::PreferencesDialog)
@@ -39,6 +38,7 @@ void PreferencesDialog::setupConnections()
 {
     connect(ui->language_ComboBox, &QComboBox::currentIndexChanged, this, &PreferencesDialog::onLanguageChanged);
     connect(ui->theme_ComboBox, &QComboBox::currentIndexChanged, this, &PreferencesDialog::onThemeChanged);
+    connect(ui->themeVariant_ComboBox, &QComboBox::currentIndexChanged, this, &PreferencesDialog::onThemeVariantChanged);
     connect(ui->argsBehaviour_ComboBox, &QComboBox::currentIndexChanged, this, &PreferencesDialog::onArgsBehaviourChanged);
     connect(ui->promptExit_CheckBox, &QCheckBox::toggled, this, &PreferencesDialog::onPromptExitToggled);
     connect(ui->checkUpdatesAtStartup_CheckBox, &QCheckBox::toggled, this, &PreferencesDialog::onCheckUpdatesAtStartupToggled);
@@ -50,6 +50,7 @@ void PreferencesDialog::setupConnections()
     connect(ui->skipCompressionDialogs_CheckBox, &QCheckBox::toggled, this, &PreferencesDialog::onSkipCompressionDialogsToggled);
     connect(ui->postCompressionAction_ComboBox, &QComboBox::currentIndexChanged, this, &PreferencesDialog::onPostCompressionActionChanged);
     connect(ui->restart_Button, &QPushButton::pressed, this, &PreferencesDialog::onRestartButtonPressed);
+    connect(ui->threadsPriority_Slider, &QSlider::valueChanged, this, &PreferencesDialog::onThreadsPriorityChanged);
 }
 
 void PreferencesDialog::loadLanguages() const
@@ -77,8 +78,10 @@ void PreferencesDialog::loadPreferences() const
     ui->multithreadingMaxThreads_SpinBox->setValue(settings.value("preferences/general/multithreading_max_threads", QThread::idealThreadCount()).toInt());
     ui->skipCompressionDialogs_CheckBox->setChecked(settings.value("preferences/general/skip_compression_dialogs", false).toBool());
     ui->theme_ComboBox->setCurrentIndex(settings.value("preferences/general/theme", 0).toInt());
+    ui->themeVariant_ComboBox->setCurrentIndex(settings.value("preferences/general/theme_variant", 0).toInt());
     ui->argsBehaviour_ComboBox->setCurrentIndex(settings.value("preferences/general/args_behaviour", 0).toInt());
     ui->postCompressionAction_ComboBox->setCurrentIndex(settings.value("preferences/general/post_compression_action", 0).toInt());
+    ui->threadsPriority_Slider->setValue(settings.value("preferences/general/threads_priority", QThread::NormalPriority).toInt());
     ui->language_ComboBox->setCurrentIndex(PreferencesDialog::getLocaleIndex());
 }
 
@@ -129,6 +132,14 @@ void PreferencesDialog::onThemeChanged(int index) const
     QSettings().setValue("preferences/general/theme", themeIndex);
 }
 
+void PreferencesDialog::onThemeVariantChanged(int index) const
+{
+    ui->changesAfterRestartTheme_Label->setVisible(true);
+    ui->changesAfterRestartTheme_LabelIcon->setVisible(true);
+    ui->restart_Button->setVisible(true);
+    QSettings().setValue("preferences/general/theme_variant", index);
+}
+
 void PreferencesDialog::onArgsBehaviourChanged(int index)
 {
     QSettings().setValue("preferences/general/args_behaviour", index);
@@ -147,11 +158,11 @@ int PreferencesDialog::getLocaleIndex()
 {
     auto localeConf = QSettings().value("preferences/language/locale", "default");
     int localeIndex = 0;
-    if (localeConf.type() == QVariant::Int || localeConf.type() == QVariant::LongLong) {
+    if (localeConf.typeId() == QVariant::Int || localeConf.typeId() == QVariant::LongLong) {
         localeIndex = localeConf.toInt();
         QString locale = LanguageManager::getTranslations().at(localeIndex).locale;
         localeIndex = LanguageManager::findSortedIndex(locale);
-    } else if (localeConf.type() == QVariant::String) {
+    } else if (localeConf.typeId() == QVariant::String) {
         localeIndex = LanguageManager::findSortedIndex(localeConf.toString());
     }
 
@@ -184,4 +195,9 @@ void PreferencesDialog::onRestartButtonPressed()
 {
     qApp->quit();
     QProcess::startDetached(qApp->arguments()[0]);
+}
+
+void PreferencesDialog::onThreadsPriorityChanged(int value)
+{
+    QSettings().setValue("preferences/general/threads_priority", value);
 }
